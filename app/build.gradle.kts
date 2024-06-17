@@ -21,6 +21,7 @@ android {
     }
 
     buildTypes {
+
         getByName("release") {
             isMinifyEnabled = false
             isDebuggable = false
@@ -29,14 +30,15 @@ android {
                 "proguard-rules.pro"
             )
 
-            resValue("string","adanname", "HoroscApp")
+            resValue("string", "adanname", "HoroscApp")
+
             buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
-        getByName("debug") {
-            isDebuggable = true
-            resValue("string","adanname", "[DEBUG] HoroscApp")
-            buildConfigField("String", "BASE_URL", "\"https://newastro-debug.vercel.app/\"")
 
+        getByName("debug"){
+            isDebuggable = true
+            resValue("string", "adanname", "[DEBUG] HoroscApp")
+            buildConfigField("String", "BASE_URL", "\"https://newastro-debug.vercel.app/\"")
         }
     }
     compileOptions {

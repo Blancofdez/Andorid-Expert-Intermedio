@@ -1,6 +1,7 @@
 package com.blancofdez.horosapp.ui.luck
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.blancofdez.horosapp.R
 import com.blancofdez.horosapp.databinding.FragmentLuckBinding
+import com.blancofdez.horosapp.ui.core.listeners.OnSwipeTouchListener
+import com.blancofdez.horosapp.ui.providers.RandomCardProviders
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Random
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -24,17 +28,51 @@ class LuckFragment : Fragment() {
     private var _binding: FragmentLuckBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var randomCardProviders: RandomCardProviders
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
     }
 
     private fun initUI() {
+        preparePrediction()
         initListeners()
+    }
+
+    private fun preparePrediction() {
+        val currentluck = randomCardProviders.getLucky()
+        currentluck?.let { luck ->
+            val currentPrediction = getString(luck.text)
+            binding.tvLucky.text = currentPrediction
+            binding.ivLuckyCard.setImageResource(luck.image)
+            binding.tvShare.setOnClickListener { shareResult(currentPrediction) }
+        }
+    }
+
+    private fun shareResult(prediction: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, prediction)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun initListeners() {
         binding.ivRoulette.setOnClickListener { spinRoulette() }
+        binding.ivRoulette.setOnTouchListener(object : OnSwipeTouchListener(requireContext()){
+
+            override fun onSwipeRight() {
+                spinRoulette()
+            }
+
+            override fun onSwipeLeft() {
+                spinRoulette()
+            }
+        })
     }
 
     private fun spinRoulette() {
@@ -95,7 +133,7 @@ class LuckFragment : Fragment() {
         val appearAnimation = AlphaAnimation(0.0f, 1.0f)
         appearAnimation.duration = 1000
 
-        disappearAnimation.setAnimationListener(object :Animation.AnimationListener{
+        disappearAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
 
             override fun onAnimationEnd(animation: Animation?) {
