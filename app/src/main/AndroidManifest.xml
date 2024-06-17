@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    PERMISO DE INTERNET-->
+    <!--    PERMISO DE INTERNET -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--    PERMISO DE CAMARA FRONTAL Y TRASERA-->
+
+    <uses-feature android:name="android.hardware.camera.any"></uses-feature>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".HorosApp"
