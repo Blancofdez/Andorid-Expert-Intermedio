@@ -1,7 +1,7 @@
-package com.blancofdez.horosapp.data.providers
+package com.blancofdez.horosapp.data
 
 import android.util.Log
-import com.blancofdez.horosapp.data.providers.network.HoroscopeApiService
+import com.blancofdez.horosapp.data.network.HoroscopeApiService
 import com.blancofdez.horosapp.domain.Repository
 import com.blancofdez.horosapp.domain.model.PredictionModel
 import javax.inject.Inject

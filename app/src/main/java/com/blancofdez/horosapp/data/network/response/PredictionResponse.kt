@@ -1,4 +1,4 @@
-package com.blancofdez.horosapp.data.providers.network.response
+package com.blancofdez.horosapp.data.network.response
 
 import com.blancofdez.horosapp.domain.model.PredictionModel
 import com.google.gson.annotations.SerializedName
