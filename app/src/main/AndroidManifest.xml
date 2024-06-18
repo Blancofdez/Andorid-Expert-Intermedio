@@ -8,7 +8,7 @@
 
     <!--    PERMISO DE CAMARA FRONTAL Y TRASERA-->
 
-    <uses-feature android:name="android.hardware.camera.any"></uses-feature>
+    <uses-feature android:name="android.hardware.camera.any" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
